@@ -1,0 +1,28 @@
+# Laminas / PHP / Composer
+/vendor/
+/composer.lock
+/.DS_Store
+/.idea/
+/.vscode/
+/config/autoload/*.local.php
+/config/autoload/*.global.php
+/node_modules/
+.env
+*.log
+/public/uploads/
+
+# Docker
+*.pid
+*.sock
+/docker/
+
+# OS
+Thumbs.db
+
+# Otros
+*.bak
+*.swp
+*.tmp
+
+# Ignorar archivos temporales
+*~
