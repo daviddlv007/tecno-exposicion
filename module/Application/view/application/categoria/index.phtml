@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gestión de Categorías - Laminas Simple</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1 { color: #333; margin-bottom: 30px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f8f9fa; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        .btn { padding: 8px 16px; margin: 2px; text-decoration: none; border-radius: 4px; display: inline-block; font-size: 14px; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-warning { background: #ffc107; color: #212529; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn:hover { opacity: 0.8; }
+        .alert { padding: 15px; margin: 20px 0; border-radius: 4px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .laminas-badge { display: inline-block; background: #28a745; color: white; padding: 4px 8px; border-radius: 12px; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏷️ Gestión de Categorías <span class="laminas-badge">Laminas Framework</span></h1>
+        
+        <a href="<?= $this->url('categoria', ['action' => 'add']) ?>" class="btn btn-primary">➕ Agregar Nueva Categoría</a>
+        
+        <?php if (empty($this->categorias)): ?>
+            <div class="alert">No hay categorías registradas.</div>
+        <?php else: ?>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($this->categorias as $categoria): ?>
+                    <tr>
+                        <td><?= $this->escapeHtml($categoria->id) ?></td>
+                        <td><?= $this->escapeHtml($categoria->nombre) ?></td>
+                        <td><?= $this->escapeHtml($categoria->descripcion) ?></td>
+                        <td>
+                            <a href="<?= $this->url('categoria', ['action' => 'edit', 'id' => $categoria->id]) ?>" class="btn btn-warning">✏️ Editar</a>
+                            <a href="<?= $this->url('categoria', ['action' => 'delete', 'id' => $categoria->id]) ?>" class="btn btn-danger" 
+                               onclick="return confirm('¿Está seguro de eliminar esta categoría?')">🗑️ Eliminar</a>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
+        
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; color: #666; font-size: 12px;">
+            💡 Laminas Framework + Datos en Sesión + Docker | 
+            <strong>Lo mejor de ambos mundos!</strong>
+        </div>
+    </div>
+</body>
+</html>

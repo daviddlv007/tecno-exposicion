@@ -1,0 +1,16 @@
+{
+    "name": "proyecto/laminas-simple-crud",
+    "description": "CRUD simple con Laminas Framework minimalista",
+    "type": "project",
+    "require": {
+        "php": "^8.1",
+        "laminas/laminas-mvc": "^3.6",
+        "laminas/laminas-view": "^2.24",
+        "laminas/laminas-router": "^3.14"
+    },
+    "autoload": {
+        "psr-4": {
+            "Application\\": "module/Application/src/"
+        }
+    }
+}
