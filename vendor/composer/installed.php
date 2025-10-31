@@ -3,7 +3,7 @@
         'name' => 'proyecto/laminas-simple-crud',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '8bc898626cbf5216442b2eb7b71c8bdac00bbc0b',
+        'reference' => 'c491867749c0689537e54e0716cbef570c39b337',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -163,7 +163,7 @@
         'proyecto/laminas-simple-crud' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '8bc898626cbf5216442b2eb7b71c8bdac00bbc0b',
+            'reference' => 'c491867749c0689537e54e0716cbef570c39b337',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
