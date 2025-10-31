@@ -3,16 +3,26 @@
 namespace Application\Controller;
 
 use Application\Model\Categoria;
+use Application\Model\CategoriaRepository;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 
 class CategoriaController extends AbstractActionController
 {
+    private $categoriaRepository;
+
+    public function __construct(CategoriaRepository $categoriaRepository)
+    {
+        $this->categoriaRepository = $categoriaRepository;
+    }
+
     public function indexAction()
     {
+        $data = $this->categoriaRepository->findAll();
         $categorias = [];
-        foreach ($_SESSION['categorias'] as $data) {
-            $categorias[] = new Categoria($data);
+        
+        foreach ($data as $row) {
+            $categorias[] = new Categoria($row);
         }
         
         return new ViewModel(['categorias' => $categorias]);
@@ -27,11 +37,7 @@ class CategoriaController extends AbstractActionController
             $descripcion = $request->getPost('descripcion', '');
             
             if (!empty($nombre)) {
-                $_SESSION['categorias'][] = [
-                    'id' => $_SESSION['next_id']++,
-                    'nombre' => $nombre,
-                    'descripcion' => $descripcion
-                ];
+                $this->categoriaRepository->insert($nombre, $descripcion);
             }
             
             return $this->redirect()->toRoute('categoria');
@@ -48,29 +54,21 @@ class CategoriaController extends AbstractActionController
             return $this->redirect()->toRoute('categoria');
         }
         
-        $categoria = null;
-        foreach ($_SESSION['categorias'] as $data) {
-            if ($data['id'] == $id) {
-                $categoria = new Categoria($data);
-                break;
-            }
-        }
+        $data = $this->categoriaRepository->findById($id);
         
-        if (!$categoria) {
+        if (!$data) {
             return $this->redirect()->toRoute('categoria');
         }
+        
+        $categoria = new Categoria($data);
         
         $request = $this->getRequest();
         if ($request->isPost()) {
             $nombre = $request->getPost('nombre', '');
             $descripcion = $request->getPost('descripcion', '');
             
-            foreach ($_SESSION['categorias'] as &$data) {
-                if ($data['id'] == $id) {
-                    $data['nombre'] = $nombre;
-                    $data['descripcion'] = $descripcion;
-                    break;
-                }
+            if (!empty($nombre)) {
+                $this->categoriaRepository->update($id, $nombre, $descripcion);
             }
             
             return $this->redirect()->toRoute('categoria');
@@ -84,9 +82,7 @@ class CategoriaController extends AbstractActionController
         $id = (int) $this->params()->fromRoute('id', 0);
         
         if ($id !== 0) {
-            $_SESSION['categorias'] = array_filter($_SESSION['categorias'], function($data) use ($id) {
-                return $data['id'] != $id;
-            });
+            $this->categoriaRepository->delete($id);
         }
         
         return $this->redirect()->toRoute('categoria');

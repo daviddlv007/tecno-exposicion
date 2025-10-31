@@ -3,8 +3,10 @@
 namespace Application;
 
 use Application\Controller\CategoriaController;
+use Application\Model\CategoriaRepository;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
+use PDO;
 
 return [
     'router' => [
@@ -38,16 +40,29 @@ return [
     'service_manager' => [
         'factories' => [
             'Router' => \Laminas\Router\RouterFactory::class,
-            'HttpRouter' => function() {
-                $router = new \Laminas\Router\Http\TreeRouteStack();
-                $router->addRoutes([]);
-                return $router;
+            PDO::class => function() {
+                $dbPath = __DIR__ . '/../../data/tecno-exposicion.db';
+                
+                // Crear directorio data si no existe
+                $dataDir = dirname($dbPath);
+                if (!is_dir($dataDir)) {
+                    mkdir($dataDir, 0755, true);
+                }
+                
+                return new PDO('sqlite:' . $dbPath);
+            },
+            CategoriaRepository::class => function($container) {
+                $pdo = $container->get(PDO::class);
+                return new CategoriaRepository($pdo);
             },
         ],
     ],
     'controllers' => [
-        'invokables' => [
-            CategoriaController::class => CategoriaController::class,
+        'factories' => [
+            CategoriaController::class => function($container) {
+                $repository = $container->get(CategoriaRepository::class);
+                return new CategoriaController($repository);
+            },
         ],
     ],
     'view_manager' => [

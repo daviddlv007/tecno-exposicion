@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'proyecto/laminas-simple-crud',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => 'c491867749c0689537e54e0716cbef570c39b337',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => null,
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -161,9 +161,9 @@
             'dev_requirement' => false,
         ),
         'proyecto/laminas-simple-crud' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'c491867749c0689537e54e0716cbef570c39b337',
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => null,
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
